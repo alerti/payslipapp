@@ -1,25 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// App.tsx
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import PayslipList from './components/PayslipList';
+import PayslipDetails from './components/PayslipDetails';
+import { Payslip } from './types';
+import { mockPayslips } from './dummy/mockData';
 
 function App() {
+  const [payslips, setPayslips] = useState<Payslip[]>(mockPayslips);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<PayslipList payslips={payslips} />} />
+        <Route path="/payslip/:id" element={<PayslipDetails payslips={payslips} />} />
+      </Routes>
+    </Router>
   );
 }
 
